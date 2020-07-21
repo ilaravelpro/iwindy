@@ -1,0 +1,37 @@
+{
+    "name": "ilaravel/iwindy",
+    "description": "iLaravel iWindy",
+    "keywords": ["laravel","windy", "forecast", "weather", "wx"],
+    "homepage": "https://ilaravel.iamir.net/packages/iwindy",
+    "license": "MIT",
+    "authors": [
+        {
+            "name" : "iamirnet",
+            "email" : "me@iamir.net",
+            "homepage": "https://iamir.net",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/app/",
+            "iLaravel\\iWindy\\": "src/"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "iLaravel\\iWindy\\Providers\\AppServiceProvider",
+                "iLaravel\\iWindy\\Providers\\RouteServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "ilaravel/core": "^1.0.0"
+    }
+}
