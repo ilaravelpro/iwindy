@@ -1,6 +1,6 @@
 <?php
 
-namespace Avita\Aircraft\Providers;
+namespace iLaravel\iWindy\Providers;
 
 use Illuminate\Routing\Router;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
@@ -24,7 +24,7 @@ class RouteServiceProvider extends ServiceProvider
     public function apiRoutes(Router $router)
     {
         $router->group([
-            'namespace' => '\App\Http\Controllers\API',
+            'namespace' => '\iLaravel\iWindy\Http\Controllers\API',
             'prefix' => 'api',
             'middleware' => 'api'
         ], function ($router) {

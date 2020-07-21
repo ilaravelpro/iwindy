@@ -1,6 +1,6 @@
 <?php
 
-namespace Avita\Aircraft\Providers;
+namespace iLaravel\iWindy\Providers;
 
 use Illuminate\Support\ServiceProvider;
 

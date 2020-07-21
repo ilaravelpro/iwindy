@@ -1,5 +1,5 @@
 {
-    "name": "ilaravel/iwindy",
+    "name": "ilaravelpro/iwindy",
     "description": "iLaravel iWindy",
     "keywords": ["laravel","windy", "forecast", "weather", "wx"],
     "homepage": "https://ilaravel.iamir.net/packages/iwindy",
@@ -30,8 +30,5 @@
         }
     },
     "minimum-stability": "dev",
-    "prefer-stable": true,
-    "require": {
-        "ilaravel/core": "^1.0.0"
-    }
+    "prefer-stable": true
 }
