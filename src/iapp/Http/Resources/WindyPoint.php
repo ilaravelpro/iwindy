@@ -1,6 +1,6 @@
 <?php
 
-namespace iLaravel\iWindy\Http\Resources;
+namespace iLaravel\iWindy\iApp\Http\Resources;
 
 use iLaravel\Core\iApp\Http\Resources\Resource;
 

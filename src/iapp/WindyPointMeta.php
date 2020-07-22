@@ -1,17 +1,19 @@
 <?php
 
-namespace iLaravel\iWindy;
+namespace iLaravel\iWindy\iApp;
 
-use Illuminate\Database\Eloquent\Model;
+use iLaravel\Core\iApp\Modals\MetaData;
 use Illuminate\Support\Facades\DB;
 
-class WindyPointMeta extends Model
+class WindyPointMeta extends MetaData
 {
     use \iLaravel\Core\iApp\Modals\Modal;
 
     public static $s_prefix = 'iwpm';
     public static $s_start = 1155;
     public static $s_end = 1733270554752;
+
+    protected $table = 'windy_points_meta';
 
     protected $guarded = [];
 
@@ -22,11 +24,5 @@ class WindyPointMeta extends Model
         {
         });
     }
-
-    public function tearDown()
-    {
-        $maxId = DB::table('windy_point_meta')->max('id');
-        DB::statement('ALTER TABLE windy_point_meta AUTO_INCREMENT=' . intval($maxId + 1) . ';');
-        parent::tearDown();
-    }
+    
 }

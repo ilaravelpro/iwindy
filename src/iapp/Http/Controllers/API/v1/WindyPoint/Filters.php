@@ -1,7 +1,7 @@
 <?php
 
 
-namespace iLaravel\iWindy\Http\Controllers\API\v1\WindyPoint;
+namespace iLaravel\iWindy\iApp\Http\Controllers\API\v1\WindyPoint;
 
 
 trait Filters

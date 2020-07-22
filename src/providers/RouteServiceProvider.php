@@ -24,7 +24,7 @@ class RouteServiceProvider extends ServiceProvider
     public function apiRoutes(Router $router)
     {
         $router->group([
-            'namespace' => '\iLaravel\iWindy\Http\Controllers\API',
+            'namespace' => '\iLaravel\iWindy\iApp\Http\Controllers\API',
             'prefix' => 'api',
             'middleware' => 'api'
         ], function ($router) {

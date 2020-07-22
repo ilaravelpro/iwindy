@@ -1,14 +1,13 @@
 <?php
 
-namespace iLaravel\iWindy;
+namespace iLaravel\iWindy\iApp;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
 class WindyPoint extends Model
 {
-    use \iLaravel\Core\iApp\Modals\Modal,
-        \iLaravel\Core\iApp\Modals\Metable;
+    use \iLaravel\Core\iApp\Modals\Modal;
 
     public static $s_prefix = 'iwp';
     public static $s_start = 1155;
@@ -17,18 +16,19 @@ class WindyPoint extends Model
     protected $guarded = [];
 
     protected $casts = [
-        'time' => 'timestamp',
+        'time' => 'datetime',
     ];
 
     protected static function boot(){
         parent::boot();
+        parent::deleting(function (self $event) {
+            $event->meta()->delete();
+            WindyPointMeta::resetRecordsId();
+        });
     }
 
-    public function tearDown()
-    {
-        $maxId = DB::table('windy_points')->max('id');
-        DB::statement('ALTER TABLE windy_points AUTO_INCREMENT=' . intval($maxId + 1) . ';');
-        parent::tearDown();
+    public function meta() {
+        return $this->hasMany(WindyPointMeta::class, 'point_id');
     }
 
 }

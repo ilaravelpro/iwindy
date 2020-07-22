@@ -17,9 +17,11 @@ class CreateWindyPointsMetaTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('point_id')->unsigned()->nullable();
             $table->foreign('point_id')->references('id')->on('windy_points')->onDelete('cascade');
-            $table->string('name')->nullable();
+            $table->string('key')->nullable();
             $table->string('value')->nullable();
             $table->string('unit')->nullable();
+            $table->string('level')->nullable();
+            $table->string('type')->default('null');
             $table->timestamps();
         });
     }
