@@ -3,20 +3,19 @@
 namespace iLaravel\iWindy\iApp;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
 
 class WindyPoint extends Model
 {
     use \iLaravel\Core\iApp\Modals\Modal;
 
-    public static $s_prefix = 'iwp';
+    public static $s_prefix = 'IWP';
     public static $s_start = 1155;
     public static $s_end = 1733270554752;
 
     protected $guarded = [];
 
     protected $casts = [
-        'time' => 'datetime',
+        'issued_at' => 'datetime',
     ];
 
     protected static function boot(){
@@ -29,6 +28,11 @@ class WindyPoint extends Model
 
     public function meta() {
         return $this->hasMany(WindyPointMeta::class, 'point_id');
+    }
+
+    public function getIssuedAtAttribute($value)
+    {
+        return format_datetime($value, $this->datetime, 'time');
     }
 
 }

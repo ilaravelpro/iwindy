@@ -9,7 +9,7 @@ class WindyPointMeta extends MetaData
 {
     use \iLaravel\Core\iApp\Modals\Modal;
 
-    public static $s_prefix = 'iwpm';
+    public static $s_prefix = 'IWPM';
     public static $s_start = 1155;
     public static $s_end = 1733270554752;
 
@@ -17,12 +17,4 @@ class WindyPointMeta extends MetaData
 
     protected $guarded = [];
 
-
-    protected static function boot(){
-        parent::boot();
-        static::deleting(function(self $event)
-        {
-        });
-    }
-    
 }

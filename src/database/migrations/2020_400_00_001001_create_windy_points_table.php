@@ -18,7 +18,7 @@ class CreateWindyPointsTable extends Migration
             $table->string('latitude')->nullable();
             $table->string('longitude')->nullable();
             $table->string('model')->nullable()->default('gfs');
-            $table->timestamp('time')->nullable();
+            $table->timestamp('issued_at')->nullable();
             $table->timestamps();
         });
     }
