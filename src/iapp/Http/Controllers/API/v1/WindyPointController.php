@@ -14,5 +14,6 @@ class WindyPointController extends Controller
         WindyPoint\Rules,
         WindyPoint\RequestData,
         WindyPoint\Filters,
+        WindyPoint\FilterWithLonLat,
         WindyPoint\SearchQ;
 }

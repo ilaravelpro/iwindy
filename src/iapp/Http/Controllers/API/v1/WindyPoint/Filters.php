@@ -38,6 +38,7 @@ trait Filters
             $this->searchQ($request, $model, $parent);
             $current['q'] = $request->q;
         }
+        $this->filterWithLonLat($request, $model, $parent, $filters, $operators);
         return [$filters, $current, $operators];
     }
 }

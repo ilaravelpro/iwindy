@@ -79,12 +79,12 @@ class WindyPoint
     public function get()
     {
         if ($this->data) return $this->data;
-        if (Cache::has($this->getCacheKey()))
-            return Cache::get($this->getCacheKey());
+        /*if (Cache::has($this->getCacheKey()))
+            return Cache::get($this->getCacheKey());*/
         $data = $this->request();
         if (!isset($data) || !$data) return [];
         $this->data = $data;
-        Cache::put($this->getCacheKey(), $this->data, $this->cache_time);
+        //Cache::put($this->getCacheKey(), $this->data, $this->cache_time);
         return (array) $this->data;
     }
 
