@@ -7,24 +7,21 @@ use Illuminate\Support\Facades\DB;
 
 class WindyPoint extends Model
 {
-    use \iLaravel\Core\iApp\Modals\Modal;
+    use \iLaravel\Core\iApp\Modals\Modal,
+        \iLaravel\Core\iApp\Modals\Metable;
 
-    public static $s_prefix = 'iw';
+    public static $s_prefix = 'iwp';
     public static $s_start = 1155;
     public static $s_end = 1733270554752;
 
     protected $guarded = [];
 
     protected $casts = [
-        'meta' => 'array',
         'time' => 'timestamp',
     ];
 
     protected static function boot(){
         parent::boot();
-        static::deleted(function(self $event)
-        {
-        });
     }
 
     public function tearDown()
@@ -33,4 +30,5 @@ class WindyPoint extends Model
         DB::statement('ALTER TABLE windy_points AUTO_INCREMENT=' . intval($maxId + 1) . ';');
         parent::tearDown();
     }
+
 }

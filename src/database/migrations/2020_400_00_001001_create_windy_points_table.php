@@ -17,13 +17,8 @@ class CreateWindyPointsTable extends Migration
             $table->bigIncrements('id');
             $table->string('latitude')->nullable();
             $table->string('longitude')->nullable();
-            $table->string('level')->nullable();
-            $table->string('name')->nullable();
-            $table->string('value')->nullable();
-            $table->string('unit')->nullable();
             $table->string('model')->nullable()->default('gfs');
             $table->timestamp('time')->nullable();
-            $table->text('meta')->nullable();
             $table->timestamps();
         });
     }
