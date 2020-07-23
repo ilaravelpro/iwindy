@@ -39,6 +39,7 @@ trait Filters
             $current['q'] = $request->q;
         }
         $this->filterWithLonLat($request, $model, $parent, $filters, $operators);
+        $this->filterWithValidAt($request, $model, $parent, $filters, $operators);
         return [$filters, $current, $operators];
     }
 }

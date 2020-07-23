@@ -6,11 +6,13 @@ trait FilterWithLonLat
 {
     public function filterWithLonLat($request, $model, $parent = null, $filters = [], $operators = [])
     {
-        if (isset($request->lat)&& isset($request->lon)){
+        if (isset($request->lat) && isset($request->lon)){
+            $request->validate([
+                'lat' => explode('|', $this->rules($request, 'store', null, 'latitude')),
+                'lon' => explode('|', $this->rules($request, 'store', null, 'longitude')),
+            ]);
             $model->where('latitude', round($request->lat, 4))
                 ->where('longitude', round($request->lon, 4));
         }
-        $model->where('issued_at', '>',\Carbon\Carbon::now()->subHours(3)->format('Y-m-d H:i:s'))
-            ->where('issued_at', '<',\Carbon\Carbon::now()->addDay()->format('Y-m-d H:i:s'));
     }
 }

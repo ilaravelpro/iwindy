@@ -15,7 +15,7 @@ class WindyPoint extends Model
     protected $guarded = [];
 
     protected $casts = [
-        'issued_at' => 'datetime',
+        'valid_at' => 'datetime',
     ];
 
     protected static function boot(){

@@ -52,11 +52,11 @@ class WindyPoint
         foreach ($data['ts'] as $index => $time) {
             if (!\iLaravel\iWindy\iApp\WindyPoint::where('latitude', round($self->params['lat'], 4))
             ->where('longitude', round($self->params['lon'], 4))
-            ->where('issued_at', date('Y-m-d H:i:s', ($time / 1000)))->first()){
+            ->where('valid_at', date('Y-m-d H:i:s', ($time / 1000)))->first()){
                 $point = \iLaravel\iWindy\iApp\WindyPoint::create([
                     "latitude" => round($self->params['lat'], 4),
                     "longitude" => round($self->params['lon'], 4),
-                    "issued_at" => date('Y-m-d H:i:s', ($time / 1000)),
+                    "valid_at" => date('Y-m-d H:i:s', ($time / 1000)),
                 ]);
                 foreach ($data['units'] as $undex => $unit) {
                     $exp = explode('-',$undex);
