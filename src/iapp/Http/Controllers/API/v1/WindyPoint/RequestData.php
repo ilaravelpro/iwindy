@@ -26,8 +26,8 @@ trait RequestData
                 if ($st > date('Y-m-d H:i:s') && $st < Carbon::now()->addDays(3)->format('Y-m-d H:i:s') && $this->whereFirst()->where('valid_at', '>', $st)->count() == 0)
                     Vendor::handelImport($params);
             }
-            if (in_array($action, ['index']) && isset($request->et)){
-                $et = str_replace('/', '-', $request->et);
+            if (in_array($action, ['index']) && isset($request->et) ||  isset($request->st)){
+                $et = isset($request->et) ? str_replace('/', '-', $request->et) : Carbon::parse($st)->addDays(1)->format('Y-m-d H:i:s');
                 if ($et > date('Y-m-d H:i:s') && $et < Carbon::now()->addDays(3)->format('Y-m-d H:i:s') && $this->whereFirst()->where('valid_at', '>', $et)->count() == 0)
                     Vendor::handelImport($params);
             }
