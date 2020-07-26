@@ -32,16 +32,17 @@ class WindyPoint
         $self = new self($params);
         $data = $self->get();
         $cdata = [];
-        foreach ($data['ts'] as $index => $time) {
-            foreach ($data['units'] as $undex => $unit) {
-                $exp = explode('-',$undex);
-                if (substr($exp[1], -1, 1) == 'h')
-                    $exp[1] = substr($exp[1] , 0, -1);
-                if (array_search($unit, array_keys($self->units)) !== false)
-                    $unit = array_values($self->units)[array_search($unit, array_keys($self->units))];
-                $cdata["$time"][$exp[0]][$exp[1]] = [$data[$undex][$index], $unit];
+        if (isset($data['ts']))
+            foreach ($data['ts'] as $index => $time) {
+                foreach ($data['units'] as $undex => $unit) {
+                    $exp = explode('-',$undex);
+                    if (substr($exp[1], -1, 1) == 'h')
+                        $exp[1] = substr($exp[1] , 0, -1);
+                    if (array_search($unit, array_keys($self->units)) !== false)
+                        $unit = array_values($self->units)[array_search($unit, array_keys($self->units))];
+                    $cdata["$time"][$exp[0]][$exp[1]] = [$data[$undex][$index], $unit];
+                }
             }
-        }
         return $cdata;
     }
 
@@ -49,7 +50,8 @@ class WindyPoint
         $self = new self($params);
         $data = $self->get();
         $cdata = [];
-        foreach ($data['ts'] as $index => $time) {
+        if (isset($data['ts']))
+            foreach ($data['ts'] as $index => $time) {
             if (!\iLaravel\iWindy\iApp\WindyPoint::where('latitude', round($self->params['lat'], 4))
             ->where('longitude', round($self->params['lon'], 4))
             ->where('valid_at', date('Y-m-d H:i:s', ($time / 1000)))->first()){
