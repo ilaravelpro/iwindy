@@ -12,7 +12,7 @@ class WindyPoint
         "lat" => 33.560000,
         "lon" => 53.447500,
         "model" => "gfs",
-        "parameters" => ["wind", "temp", "dewpoint", "windGust", "pressure"],
+        "parameters" => ["wind", "temp"],
         "levels" => ["surface", "1000h", "950h", "925h", "900h", "850h", "800h", "700h", "600h", "500h", "400h", "300h", "200h", "150h"],
     ];
 

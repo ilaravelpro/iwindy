@@ -9,6 +9,15 @@ class WindyPoint extends Resource
     public function toArray($request)
     {
         $data = parent::toArray($request);
+        if (isset($request->level)){
+            $wind_unit = $request->has('level_unit') ? $request->level_unit : iwindy('units.level');
+            switch ($wind_unit){
+                case 'ft':
+                    $level = array_keys(iwindy('values.level.h_to_ft'))[getClosestKey($request->level , array_values(iwindy('values.level.h_to_ft')))];
+                    $request->merge(['level' => substr($level, -1, 1) == 'h' ? substr($level , 0, -1) : $level]);
+                    break;
+            }
+        }
         if (isset($request->level) && preg_match('/[0-9]/', $request->level)){
             $first = $this->meta()
                 ->selectRaw("*, ABS(level -  {$request->level}) AS distance")
