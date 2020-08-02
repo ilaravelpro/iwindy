@@ -20,7 +20,7 @@ class CreateWindyPointsMetaTable extends Migration
             $table->string('key')->nullable();
             $table->string('value')->nullable();
             $table->string('unit')->nullable();
-            $table->string('level')->nullable();
+            $table->integer('level')->nullable();
             $table->string('type')->default('null');
             $table->timestamps();
         });

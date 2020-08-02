@@ -38,6 +38,8 @@ class WindyPoint
                     $exp = explode('-',$undex);
                     if (substr($exp[1], -1, 1) == 'h')
                         $exp[1] = substr($exp[1] , 0, -1);
+                    if ($exp[1] == 'surface')
+                        $exp[1] = 0;
                     if (array_search($unit, array_keys($self->units)) !== false)
                         $unit = array_values($self->units)[array_search($unit, array_keys($self->units))];
                     $cdata["$time"][$exp[0]][$exp[1]] = [$data[$undex][$index], $unit];
@@ -64,6 +66,8 @@ class WindyPoint
                     $exp = explode('-',$undex);
                     if (substr($exp[1], -1, 1) == 'h')
                         $exp[1] = substr($exp[1] , 0, -1);
+                    if ($exp[1] == 'surface')
+                        $exp[1] = 0;
                     if (array_search($unit, array_keys($self->units)) !== false)
                         $unit = array_values($self->units)[array_search($unit, array_keys($self->units))];
                     $point->meta()->create([

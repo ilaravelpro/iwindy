@@ -11,6 +11,8 @@ class WindyPointMeta extends Resource
         $data = parent::toArray($request);
         $data = $this->handelWind($request, $data);
         $data = $this->handelTemp($request, $data);
+        if ($data['level'] == 0)
+            $data['level'] = 'surface';
         unset($data['id']);
         unset($data['id_text']);
         unset($data['key']);
