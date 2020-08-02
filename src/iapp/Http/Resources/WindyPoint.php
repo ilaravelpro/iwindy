@@ -9,16 +9,16 @@ class WindyPoint extends Resource
     public function toArray($request)
     {
         $data = parent::toArray($request);
-        if (isset($request->level)){
+        if (isset($request->level)) {
             $wind_unit = $request->has('level_unit') ? $request->level_unit : iwindy('units.level');
-            switch ($wind_unit){
+            switch ($wind_unit) {
                 case 'ft':
-                    $level = array_keys(iwindy('values.level.h_to_ft'))[getClosestKey($request->level , array_values(iwindy('values.level.h_to_ft')))];
-                    $level = substr($level, -1, 1) == 'h' ? substr($level , 0, -1) : $level;
+                    $level = getClosestKey($request->level, iwindy('values.level.h_to_ft'));
+                    $level = substr($level, -1, 1) == 'h' ? substr($level, 0, -1) : $level;
                     break;
             }
         }
-        if (isset($level) && preg_match('/[0-9]/', $level)){
+        if (isset($level) && preg_match('/[0-9]/', $level)) {
             $first = $this->meta()
                 ->selectRaw("*, ABS(level -  {$level}) AS distance")
                 ->where('level', '>=', $level)
@@ -32,8 +32,7 @@ class WindyPoint extends Resource
                 ->union($first)
                 ->orderBy('distance')
                 ->get();
-        }
-        else
+        } else
             $meta = $this->meta;
         $data = array_merge($data, WindyPointMeta::collection($meta)->groupBy('key')->toArray());
         unset($data['created_at']);
