@@ -35,8 +35,21 @@ class WindyPoint extends Resource
         } else
             $meta = $this->meta;
         $data = array_merge($data, WindyPointMeta::collection($meta)->groupBy('key')->toArray());
+        foreach ($data['wind_u'] as $index => $wind_u) {
+            $wind = _uv2ddff($wind_u['value'] / 1.9438444924406, $data['wind_v'][$index]['value'] / 1.9438444924406);
+            $wind['level'] = $wind_u['level'] == 0? 'surface' : $wind_u['level'];
+            $data['wind'][$index] = _handelWind($request, $wind, 'speed', true);
+        }
+        $data = insert_into_array($data, 'valid_at', 'wind', $data['wind']);
         unset($data['created_at']);
         unset($data['updated_at']);
         return $data;
+    }
+
+    public function windDir($u, $v)
+    {
+        if ($u > 0) return ((180 / pi()) * atan($u / $v) + 180);
+        if ($u < 0 & $v < 0) return ((180 / pi()) * atan($u / $v) + 0);
+        if ($u > 0 & $v < 0) return ((180 / pi()) * atan($u / $v) + 360);
     }
 }
