@@ -18,7 +18,10 @@ trait RequestData
                 ]);
                 $params['model'] = $request->model;
             }
-            $this->whereFirst()->where('valid_at', '<',\Carbon\Carbon::now()->subHours(3)->format('Y-m-d H:i:s'))->delete();
+            $this->whereFirst(false)->where('valid_at', '<',\Carbon\Carbon::now()->subHours(3)->format('Y-m-d H:i:s'))
+                ->each(function ($record) {
+                    $record->delete();
+                });
             if ($this->whereFirst()->where('valid_at', '<',\Carbon\Carbon::now()->addDay()->format('Y-m-d H:i:s'))->count() <= 5)
                 Vendor::handelImport($params);
             if (in_array($action, ['index']) && isset($request->st)){
@@ -34,9 +37,9 @@ trait RequestData
         }
     }
 
-    protected function whereFirst() {
-        $model = $this->model::where('latitude', round(\request()->lat, 4))
-            ->where('longitude', round(\request()->lon, 4));
+    protected function whereFirst($lotlon = true) {
+        $model = $lotlon ? $this->model::where('latitude', round(\request()->lat, 4))
+            ->where('longitude', round(\request()->lon, 4)) : $this->model::where('id', '>', 0);
         if (isset(\request()->model))
             $model->where('model', \request()->model);
         return $model;

@@ -30,7 +30,7 @@ class WindyPoint extends Model
         return $this->hasMany(WindyPointMeta::class, 'point_id');
     }
 
-    public function getIssuedAtAttribute($value)
+    public function getValidAtAttribute($value)
     {
         return format_datetime($value, $this->datetime, 'time');
     }
