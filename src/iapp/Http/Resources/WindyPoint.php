@@ -18,7 +18,7 @@ class WindyPoint extends Resource
                     break;
             }
         }
-        if (isset($level) && preg_match('/[0-9]/', $level)) {
+        if (method_exists($this, 'meta') && isset($level) && preg_match('/[0-9]/', $level)) {
             $first = $this->meta()
                 ->selectRaw("*, ABS(level -  {$level}) AS distance")
                 ->where('level', '>=', $level)
@@ -34,13 +34,17 @@ class WindyPoint extends Resource
                 ->get();
         } else
             $meta = $this->meta;
-        $data = array_merge($data, WindyPointMeta::collection($meta)->groupBy('key')->toArray());
-        foreach ($data['wind_u'] as $index => $wind_u) {
-            $wind = _uv2ddff($wind_u['value'] / 1.9438444924406, $data['wind_v'][$index]['value'] / 1.9438444924406);
-            $wind['level'] = $wind_u['level'] == 0? 'surface' : $wind_u['level'];
-            $data['wind'][$index] = _handelWind($request, $wind, 'speed', true);
+        $data = array_merge($data, WindyPointMeta::collection($meta)->groupBy('key')->map(function ($item) use ($request) {
+            return $item->map(function ($item) use ($request) {
+                return $item->toArray($request);
+            })->first();
+        })->toArray($request));
+        if (isset($data['wind_u'])){
+            $wind = _uv2ddff($data['wind_u']['value'] / 1.9438444924406, $data['wind_v']['value'] / 1.9438444924406);
+            $wind['level'] = $data['wind_u']['level'] == 0 ? 'surface' : $data['wind_u']['level'];
+            $data['wind'] = _handelWind($request, $wind, 'speed', true);
+            $data = insert_into_array($data, 'valid_at', 'wind', $data['wind']);
         }
-        $data = insert_into_array($data, 'valid_at', 'wind', $data['wind']);
         unset($data['created_at']);
         unset($data['updated_at']);
         return $data;

@@ -18,7 +18,7 @@ trait RequestData
                 ]);
                 $params['model'] = $request->model;
             }
-            $this->whereFirst(false)->where('valid_at', '<',\Carbon\Carbon::now()->subHours(3)->format('Y-m-d H:i:s'))
+            $this->whereFirst()->where('valid_at', '<',\Carbon\Carbon::now()->subHours(3)->format('Y-m-d H:i:s'))
                 ->each(function ($record) {
                     $record->delete();
                 });
