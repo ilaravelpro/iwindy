@@ -45,11 +45,12 @@ class WindyPoint extends Model
             ->where('longitude', round($lat, 4))->orderBy('valid_at')->get();
     }
 
-    public static function findByLonLat(float $lon, float $lat, $valid_at = null)
+    public static function findByLonLat(float $lon, float $lat, $valid_at = null, $name = null)
     {
         if (static::where('latitude', round($lat, 4))
                 ->where('longitude', round($lon, 4))
-                ->where('valid_at', '<',\Carbon\Carbon::now()->addDay()->format('Y-m-d H:i:s'))->count() <= 5)
+                ->where('valid_at', '>=', $valid_at ?: Carbon::now()->addDay()->format('Y-m-d H:i:s'))
+                ->orderBy('valid_at')->count() < 5)
             Vendor::handelImport(['lon' => $lon, 'lat' => $lat]);
         return static::where('latitude', round($lat, 4))
             ->where('longitude', round($lon, 4))
@@ -58,7 +59,8 @@ class WindyPoint extends Model
             ->first();
     }
 
-    public static function whereFirst(float $lon, float $lat, $model = 'gfs') {
+    public static function whereFirst(float $lon, float $lat, $model = 'gfs')
+    {
         $model = static::where('latitude', round($lat, 4))
             ->where('longitude', round($lon, 4));
         if ($model) $model->where('model', $model);

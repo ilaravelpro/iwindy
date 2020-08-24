@@ -33,7 +33,7 @@ class WindyPoint extends Resource
                 ->orderBy('distance')
                 ->get();
         } else
-            $meta = $this->meta;
+            $meta = isset($this->meta) ? $this->meta : collect();
         $data = array_merge($data, WindyPointMeta::collection($meta)->groupBy('key')->map(function ($item) use ($request) {
             return $item->map(function ($item) use ($request) {
                 return $item->toArray($request);
