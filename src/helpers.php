@@ -46,5 +46,5 @@ function _handelTemp($request, $data, $nameValue = 'value', $conv = false)
 
 function _toISA($level, $temp)
 {
-    return round(((($level / 10) * 2) - 15) - $temp, 2);
+    return round($temp-(15-(($level / 10) * 2)), 2);
 }
