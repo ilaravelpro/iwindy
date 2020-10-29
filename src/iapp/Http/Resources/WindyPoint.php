@@ -34,9 +34,13 @@ class WindyPoint extends Resource
                 ->get();
         } else
             $meta = isset($this->meta) ? $this->meta : collect();
-        $data = array_merge($data, WindyPointMeta::collection($meta)->groupBy('key')->map(function ($item) use ($request) {
+        if (!isset($level))
+            $level = 0;
+        $data = array_merge($data, WindyPointMeta::collection($meta)->groupBy('key')->map(function ($item) use ($request, $wind_unit, $level) {
             return $item->map(function ($item) use ($request) {
                 return $item->toArray($request);
+            })->filter(function ($v, $i) use ($wind_unit, $level){
+                return $wind_unit == 'ft' && $level != 0 ? $level == $v['level'] : true;
             })->first();
         })->toArray($request));
         if (isset($data['wind_u'])){
