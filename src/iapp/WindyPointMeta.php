@@ -2,7 +2,7 @@
 
 namespace iLaravel\iWindy\iApp;
 
-use iLaravel\Core\iApp\Modals\MetaData;
+use iLaravel\Core\iApp\Methods\MetaData;
 use Illuminate\Support\Facades\DB;
 
 class WindyPointMeta extends MetaData
