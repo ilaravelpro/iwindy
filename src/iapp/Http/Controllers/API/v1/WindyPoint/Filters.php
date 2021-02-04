@@ -8,8 +8,6 @@ trait Filters
 {
     public function filters($request, $model, $parent = null, $operators = [])
     {
-        $user = auth()->user();
-        $filters = [];
         $current = [];
         $filters = [
             [
@@ -33,11 +31,6 @@ trait Filters
                 'type' => 'text'
             ],
         ];
-        $this->requestFilter($request, $model, $parent, $filters, $operators);
-        if ($request->q) {
-            $this->searchQ($request, $model, $parent);
-            $current['q'] = $request->q;
-        }
         $this->filterWithLonLat($request, $model, $parent, $filters, $operators);
         $this->filterWithValidAt($request, $model, $parent, $filters, $operators);
         return [$filters, $current, $operators];
