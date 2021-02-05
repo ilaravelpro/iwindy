@@ -1,4 +1,9 @@
 <?php
+/**
+ * Author: Amir Hossein Jahani | iAmir.net
+ * Last modified: 10/29/20, 6:35 PM
+ * Copyright (c) 2021. Powered by iamir.net
+ */
 
 function iwindy_path($path = null)
 {
