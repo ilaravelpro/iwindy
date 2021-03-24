@@ -48,8 +48,3 @@ function _handelTemp($request, $data, $nameValue = 'value', $conv = false)
     }
     return $data;
 }
-
-function _toISA($level, $temp)
-{
-    return round($temp-(15-(($level / 10) * 2)), 2);
-}
